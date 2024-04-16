@@ -129,6 +129,7 @@
       <path value="$PROJECT_DIR$/REST-API-Laravel/vendor/laravel/sail" />
       <path value="$PROJECT_DIR$/REST-API-Laravel/vendor/league/flysystem" />
       <path value="$PROJECT_DIR$/REST-API-Laravel/vendor/laravel/framework" />
+      <path value="$PROJECT_DIR$/REST-API-Laravel/vendor/laravel/sanctum" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
