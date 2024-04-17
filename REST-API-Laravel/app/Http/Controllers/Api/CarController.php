@@ -48,9 +48,19 @@ class CarController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Car $car)
+    public function show(Car $car): JsonResponse
     {
-        //
+        try {
+            $details = new CarResource($car);
+            return response()->json(['status' => true, 'data' => $details, 'message' => 'success']);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'data' => '',
+                //'message' => $th->getMessage()
+                'message' => 'error occurred'
+            ], 422);
+        }
     }
 
     /**
