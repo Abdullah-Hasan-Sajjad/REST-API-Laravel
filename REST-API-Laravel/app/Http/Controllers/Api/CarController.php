@@ -95,8 +95,22 @@ class CarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Car $car)
+    public function destroy(Car $car): JsonResponse
     {
-        //
+        try {
+            $car->delete();
+            return response()->json([
+                'status' => true,
+                'data' => $car,
+                'message' => 'Deleted successfully'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'data' => '',
+                //'message' => $th->getMessage()
+                'message' => 'error occurred'
+            ], 422);
+        }
     }
 }
