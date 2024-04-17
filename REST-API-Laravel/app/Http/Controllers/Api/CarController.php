@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CarRequest;
 use App\Http\Resources\CarResource;
 use App\Models\Car;
+use App\Services\CarService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -14,8 +17,11 @@ class CarController extends Controller
      */
     public function index():object
     {
-        $car =  CarResource::collection(Car::all());
-        return $car;
+        $cars =  CarResource::collection(Car::all());
+        return response()->json([
+            'status' => true,
+            'data' => $cars,
+            'message' => 'Success']);
     }
 
     /**
@@ -29,9 +35,14 @@ class CarController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CarRequest $request): JsonResponse
     {
-        //
+        try {
+            $car = (new CarService())->createCar($request);
+            return response()->json(['status' => true, 'data' => $car, 'message' => 'Car info created'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => false,'data' => '','message' => 'Can not create car info'], 422);
+        }
     }
 
     /**
