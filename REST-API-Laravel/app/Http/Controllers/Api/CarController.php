@@ -74,9 +74,22 @@ class CarController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Car $car)
+    public function update(CarRequest $request, Car $car): JsonResponse
     {
-        //
+        try {
+            $car->update($request->validated());
+            return response()->json([
+                'status' => true,
+                'data' => $car,
+                'message' => 'Successfully updated']);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'data' => '',
+                //'message' => $th->getMessage()
+                'message' => 'error occurred'
+            ], 422);
+        }
     }
 
     /**
